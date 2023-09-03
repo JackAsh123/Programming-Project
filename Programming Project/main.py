@@ -21,3 +21,11 @@ while running:
   if keys[pygame.K_SPACE] and onGround:
     playerSpeedY = jumpPower
     onGround = False
+
+  #Gravity
+  if not onGround:
+    playerSpeedY += gravity 
+
+  #Updating player positions
+  player.x += playerSpeedX
+  player.y += playerSpeedY
