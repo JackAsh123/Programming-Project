@@ -1,15 +1,11 @@
-"""
-Global constants
-"""
- 
-# Colors
-BLACK    = (   0,   0,   0) 
-WHITE    = ( 255, 255, 255) 
-BLUE     = (   0,   0, 255)
- 
-# Screen dimensions
-SCREEN_WIDTH  = 800
-SCREEN_HEIGHT = 600
+#Player setup
 
+#Player dimensions
+player = pygame.Rect(50, SCREEN_HEIGHT - GROUND_HEIGHT - PLAYER_HEIGHT, PLAYER_WIDTH, PLAYER_HEIGHT)
 
-
+#Player Characteristics 
+playerSpeedX = 0
+playerSpeedY = 0
+gravity = 0.5
+jumpPower  = -10
+onGround = False 
