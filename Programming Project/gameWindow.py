@@ -1,18 +1,13 @@
-import sys
 import pygame
-from pygame.locals import*  #Importing all necessary modules
+import sys
 
-pygame.init()#Initialising pygame
+#initialise pygame
+pygame.init()
 
-screenWidth = 600
-screenHeight = 600#Setting dimensions of the window
-window = pygame.display.set_mode((screenWidth,screenHeight)) #Set the size of the screen using
-#pygame.display.set_mode()
+#Creating game window 
+screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+pygame.display.set_caption("Jario")
 
-img = pygame.image.load("Assets/cave_city_background.png")#Load the image
-window.blit(window, (screenWidth, screenHeight))#Blit
-
-pygame.display.update()#Update the screen
 
 
 
