@@ -29,3 +29,28 @@ while running:
   #Updating player positions
   player.x += playerSpeedX
   player.y += playerSpeedY
+
+  #Keep sprite in the game window
+  if player.left < 0:
+    player.left = 0 
+  if player.right > SCREEN_WIDTH:
+    player.right = SCREEN_WIDTH
+  if player.top < 0:
+    player.top = 0 
+  if player.bottom > SCREEN_HEIGHT - GROUND_HEIGHT:
+    player.bottom = SCREEN_HEIGHT - GROUND_HEIGHT
+    onGround = True 
+
+  #Clearing the screen
+  screen.fill(WHITE)
+
+  #Drawing the ground
+  pygme.draw.rect(screen, (0, 255, 0), (0, SCREEN_HEIGHT - GROUND_HEIGHT, SCREEN_WIDTH, GROUND_HEIGHT)
+
+  #Drawing the sprite 
+  pygame.draw.rect(screen, (0, 255, 0), player)
+
+  #pygame.display.update()
+
+
+
