@@ -11,9 +11,9 @@ while running:
 
   #Horizontal sprite movement
   if keys[pygame.K_LEFT]:
-    spriteSpeedX = -PLAYER_SPEED
+    spriteSpeedX = -SPRITE_SPEED
   elif keys[pygame.K_RIGHT]:
-    spriteSpeedX = PLAYER_SPEED
+    spriteSpeedX = SPRITE_SPEED
   else:
     spriteSpeedX = 0
 
