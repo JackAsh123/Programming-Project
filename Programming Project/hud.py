@@ -17,11 +17,11 @@ def updateLives(life):
 
 #Render the score
 scoreText = font.render("Score: " + str(score), True, (255, 255, 255))
-game_display.blit(text, (10,10))
+screen.blit(text, (10,10))
 
 #Render the lives
 livesText = font.render("Lives: ", + str(lives), True, (255,255,255))
-screen.blit
+screen.blit(text, (50,10))
 
 #Update display
 pygame.display.flip()
