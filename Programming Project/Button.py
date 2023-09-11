@@ -17,3 +17,8 @@ def Button:
 #Create the buttons 
 play_button = Button(300, 200, 200, 50, "Play")
 quit_button = Button(300, 300, 200, 50, "Quit")
+
+screen.fill(black)
+play_button.draw()
+quit_button.draw()
+pygame.display.update()
