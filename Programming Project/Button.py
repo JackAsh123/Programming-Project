@@ -21,4 +21,4 @@ quit_button = Button(300, 300, 200, 50, "Quit")
 screen.fill(black)
 play_button.draw()
 quit_button.draw()
-pygame.display.update()
+pygame.display.update()           #Button.py + mainMenuEventHandler.py is for making the main menu, might need its own screen 
