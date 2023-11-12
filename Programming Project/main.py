@@ -1,4 +1,8 @@
 #Main game loop
+import pygame
+from pygame.locals import *
+
+
 
 #Event handler 
 running = True 
