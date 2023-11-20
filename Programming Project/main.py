@@ -10,44 +10,80 @@ screen_height = 1000
 
 #define and name the screen
 screen = pygame.display.set_mode((screen_width, screen_height))
-pygame.display.set_caption('Platformer')
+pygame.display.set_caption('Jario')
 
 #define game variables
 tile_size = 50
 
 
 #load images
-sun_img = pygame.image.load('')#ADD IMAGE PATHWAYS################
-bg_img = pygame.image.load('')
-
+moon_img = pygame.image.load('Assets/pixel_moon.png')
+bg_img = pygame.image.load('Assets/cave_city_background.png')
+scale_bg_img = pygame.transform.scale(bg_img, (screen_width, screen_height))
+#temporary drawn grid so I can see what blocks to change to what platforms
 def draw_grid():
 	for line in range(0, 20):
 		pygame.draw.line(screen, (255, 255, 255), (0, line * tile_size), (screen_width, line * tile_size))
 		pygame.draw.line(screen, (255, 255, 255), (line * tile_size, 0), (line * tile_size, screen_height))
 
 
+class PlayerSprite():  #instantiating the players sprite and scaling it to fit the map
+	def __init__(self, x, y): #constructor method
+		img = pygame.image.load("Assets/elven_man.png")
+		self.image = pygame.transform.scale(img, (30, 60))
+		self.rect = self.image.get_rect()
+		self.rect.x = x
+		self.rect.y = y
+		self.vel_y = 0
+
+
+	def update(self):
+		dx = 0
+		dy = 0
+
+
+		#get key presses 
+		key = pygame.key.get_pressed()
+		if key[pygame.K_SPACE]:
+			self.vel_y = -15
+		if key[pygame.K_LEFT]:
+			dx -= 5
+		if key[pygame.K_RIGHT]:
+			dx += 5
+
+		dy  += self.vel_y
+		#check for collision - code this at a later stage 
+
+		#update player coordinates
+		self.rect.x += dx
+		self.rect.y += dy
+
+
+
+		#draw the player's sprite onto the screen
+		screen.blit(self.image, self.rect)
 
 class World():
 	def __init__(self, data):
 		self.tile_list = []
 
 		#load images
-		dirt_img = pygame.image.load('')#ADD IMAGE PATHWAYS##################
-		grass_img = pygame.image.load('')
+		stone_img = pygame.image.load('Assets/stone_block1.png') #assigns variable name to img from Assets folder 
+		moss_img = pygame.image.load('Assets/stone_block2.jpg')
 
-		row_count = 0
+		row_count = 0 #allows to put block images into specific tiles at the right scale
 		for row in data:
 			col_count = 0
 			for tile in row:
 				if tile == 1:
-					img = pygame.transform.scale(dirt_img, (tile_size, tile_size))
+					img = pygame.transform.scale(stone_img, (tile_size, tile_size))
 					img_rect = img.get_rect()
 					img_rect.x = col_count * tile_size
 					img_rect.y = row_count * tile_size
 					tile = (img, img_rect)
 					self.tile_list.append(tile)
 				if tile == 2:
-					img = pygame.transform.scale(grass_img, (tile_size, tile_size))
+					img = pygame.transform.scale(moss_img, (tile_size, tile_size))
 					img_rect = img.get_rect()
 					img_rect.x = col_count * tile_size
 					img_rect.y = row_count * tile_size
@@ -58,7 +94,7 @@ class World():
 
 	def draw(self):
 		for tile in self.tile_list:
-			screen.blit(tile[0], tile[1])
+			screen.blit(tile[0], tile[1]) #blits tiles onto the screen
 
 
 
@@ -82,21 +118,22 @@ world_data = [
 [1, 0, 0, 0, 0, 0, 2, 2, 2, 6, 6, 6, 6, 6, 1, 1, 1, 1, 1, 1], 
 [1, 0, 0, 0, 0, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], 
 [1, 0, 0, 0, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], 
-[1, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
 ]
 
 
 
-
+player_sprite = PlayerSprite(100, screen_height - 110)
 world = World(world_data)
 
 run = True
 while run:
 
-	screen.blit(bg_img, (0, 0))
-	screen.blit(sun_img, (100, 100))
+	screen.blit(scale_bg_img, (0, 0))
+	screen.blit(moon_img, (100, 100))
 
 	world.draw()
+	player_sprite.update()
 
 	draw_grid()
 
