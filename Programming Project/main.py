@@ -4,6 +4,9 @@ from pygame.locals import *
 
 pygame.init()
 
+clock = pygame.time.Clock()
+fps = 60 
+
 #screen dimensions
 screen_width = 1000
 screen_height = 1000
@@ -29,13 +32,17 @@ def draw_grid():
 
 class PlayerSprite():  #instantiating the players sprite and scaling it to fit the map
 	def __init__(self, x, y): #constructor method
-		img = pygame.image.load("Assets/elven_man.png")
+		self.images_right = [] 
+		self.indef=x = 0
+		self.counter = 0
+		for num in range(1, 5):
+			img = pygame.image.load("Assets/elven_man{num}.png")
 		self.image = pygame.transform.scale(img, (30, 60))
 		self.rect = self.image.get_rect()
 		self.rect.x = x
 		self.rect.y = y
 		self.vel_y = 0
-
+		self.jumped = False
 
 	def update(self):
 		dx = 0
@@ -44,20 +51,34 @@ class PlayerSprite():  #instantiating the players sprite and scaling it to fit t
 
 		#get key presses 
 		key = pygame.key.get_pressed()
-		if key[pygame.K_SPACE]:
+		if key[pygame.K_SPACE] and self.jumped == False:
 			self.vel_y = -15
+			self.jumped = True
+
+		if key[pygame.K_SPACE] == False:
+			self.jumped = False
+
 		if key[pygame.K_LEFT]:
 			dx -= 5
+
 		if key[pygame.K_RIGHT]:
 			dx += 5
 
-		dy  += self.vel_y
+
+		#adding gravity 
+		self.vel_y += 1
+		if self.vel_y > 10:
+			self.vel_y = 10 #sets terminal velocity to ten so it can't be surpassed
+		dy += self.vel_y
+
 		#check for collision - code this at a later stage 
 
 		#update player coordinates
 		self.rect.x += dx
 		self.rect.y += dy
 
+		if self.rect.bottom > screen_height:
+			self.rect.bottom = screen_height
 
 
 		#draw the player's sprite onto the screen
@@ -129,6 +150,8 @@ world = World(world_data)
 run = True
 while run:
 
+	clock.tick(fps)
+
 	screen.blit(scale_bg_img, (0, 0))
 	screen.blit(moon_img, (100, 100))
 
@@ -141,6 +164,9 @@ while run:
 		if event.type == pygame.QUIT:
 			run = False
 
+	pygame.display.update()
+
+pygame.quit()
 	pygame.display.update()
 
 pygame.quit()
